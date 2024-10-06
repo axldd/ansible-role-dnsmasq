@@ -420,6 +420,11 @@ enable-ra
 # Note the MAC addresses CANNOT be used to identify DHCPv6 clients.
 # Note also that the [] around the IPv6 address are obligatory.
 #dhcp-host=id:00:01:00:01:16:d2:83:fc:92:d4:19:e2:d8:b2, fred, [1234::5]
+{% if dnsmasq_hosts is defined %}
+{% for item in dnsmasq_hosts %}
+dhcp-host={{ item.name }},{{ item.value }}
+{% endfor %}
+{% endif %}
 
 # Ignore any clients which are not specified in dhcp-host lines
 # or /etc/ethers. Equivalent to ISC "deny unknown-clients".
