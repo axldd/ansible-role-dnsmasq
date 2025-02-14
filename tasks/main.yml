@@ -7,6 +7,19 @@
   run_once: true
   delegate_to: localhost
 
+- name: Stop, disable, and mask systemd-resolved service
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+    masked: true
+  ignore_errors: true
+
+- name: Remove systemd-resolved package
+  apt:
+    name: systemd-resolved
+    state: absent
+
 - name: Install dnsmasq
   ansible.builtin.package:
     name: "{{ dnsmasq_packages }}"
